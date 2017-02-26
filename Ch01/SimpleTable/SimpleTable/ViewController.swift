@@ -34,17 +34,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK:
     //MARK: UITableViewDatasource functions    
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("CellIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
         
         cell.textLabel!	.text = tableData[indexPath.row]
         
@@ -55,17 +55,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK:
     // MARK: UITableViewDelegate functions
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             
             let messageString = "You tapped row \(indexPath.row)"
             
-            let alertController = UIAlertController(title: "Row tapped", message: messageString, preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "Row tapped", message: messageString, preferredStyle: .alert)
             
-            let okAction = UIAlertAction(title: "OK", style: .Default,  handler: nil)
+            let okAction = UIAlertAction(title: "OK", style: .default,  handler: nil)
             
             alertController.addAction(okAction)
             
-            self.presentViewController(alertController, animated: true) {
+            self.present(alertController, animated: true) {
                 print("\(messageString)")
             }
             
