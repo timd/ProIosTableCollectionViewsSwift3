@@ -25,17 +25,17 @@ class MVVMCell: UITableViewCell {
         updateUI()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    private func updateUI() {
+    fileprivate func updateUI() {
         
         guard let viewModel = viewModel else {
             return
         }
         
-        nameLabel.text = viewModel.displayName ?? ""
+        nameLabel.text = viewModel.displayName
         
         if let age = viewModel.age {
             ageLabel.text = "\(age)"

@@ -17,7 +17,7 @@ struct Character : CharacterViewModel {
     
     var firstName: String
     var lastName: String
-    var dateOfBirth: NSDate?
+    var dateOfBirth: Date?
     
     init(firstName: String = "", lastName: String = "") {
         self.firstName = firstName
@@ -36,8 +36,8 @@ extension Character {
     var age: Int? {
         
         if let dateOfBirth = self.dateOfBirth {
-            let calendar = NSCalendar.currentCalendar()
-            let components = calendar.components(.Year, fromDate: dateOfBirth, toDate: NSDate(), options: [])
+            let calendar = Calendar.current
+            let components = (calendar as NSCalendar).components(.year, from: dateOfBirth, to: Date(), options: [])
             return components.year
         }
         
