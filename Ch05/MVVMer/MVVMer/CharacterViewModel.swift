@@ -19,8 +19,8 @@ struct CharacterViewModel {
         
         if let dob = character.dateOfBirth {
             
-            let calendar = NSCalendar.currentCalendar()
-            let components = calendar.components(.Year, fromDate: dob, toDate: NSDate(), options: [])
+            let calendar = Calendar.current
+            let components = (calendar as NSCalendar).components(.year, from: dob as Date, to: Date(), options: [])
             age = components.year
             
         } else {

@@ -12,7 +12,7 @@ struct Character {
     
     var firstName: String
     var lastName: String
-    var dateOfBirth: NSDate?
+    var dateOfBirth: Date?
     
     init(firstName: String = "", lastName: String = "") {
         self.firstName = firstName
