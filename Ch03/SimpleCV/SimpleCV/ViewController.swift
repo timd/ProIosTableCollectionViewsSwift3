@@ -13,9 +13,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var suitsArray = [Dictionary<String, AnyObject>]()
     @IBOutlet var collectionView: UICollectionView!
     
-    enum ParsingError: ErrorType {
-        case MissingJson
-        case JsonParsingError
+    enum ParsingError: Error {
+        case missingJson
+        case jsonParsingError
     }
 
     override func viewDidLoad() {
@@ -29,11 +29,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             
             try setupData()
             
-        } catch ParsingError.MissingJson {
+        } catch ParsingError.missingJson {
             
             print("Error loading JSON")
             
-        } catch ParsingError.JsonParsingError {
+        } catch ParsingError.jsonParsingError {
             
             print("Error parsing JSON")
             
@@ -57,38 +57,38 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func setupData () throws {
             
-        guard let filePath = NSBundle.mainBundle().pathForResource("cards", ofType: "json"), jsonData = NSData(contentsOfFile: filePath) else {
-            throw ParsingError.MissingJson
+        guard let filePath = Bundle.main.path(forResource: "cards", ofType: "json"), let jsonData = try? Data(contentsOf: URL(fileURLWithPath: filePath)) else {
+            throw ParsingError.missingJson
         }
     
         do {
-            let parsedObject = try NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+            let parsedObject = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
             suitsArray = parsedObject["suits"] as! Array
         } catch {
-            throw ParsingError.JsonParsingError
+            throw ParsingError.jsonParsingError
         }
     }
     
     func configureCollectionView() {
-        collectionView.registerNib(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CardCell")
+        collectionView.register(UINib(nibName: "CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CardCell")
     }
     
     // MARK: -
     // MARK: UICollectionViewDataSource methods
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return suitsArray.count
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let cardsDictionary = self.suitsArray[section]
         let cardsArray = cardsDictionary["cards"] as! NSArray
         return cardsArray.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: UICollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("CardCell", forIndexPath: indexPath)
+        let cell: UICollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardCell", for: indexPath)
         
         let suitDictionary = suitsArray[indexPath.section]
         let cardsArray = suitDictionary["cards"] as! [Dictionary<String, AnyObject>]
@@ -108,7 +108,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
         return UIEdgeInsetsMake(10, 10, 10, 10)
         

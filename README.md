@@ -6,6 +6,7 @@ Code repo for Pro iOS Table &amp; Collection Views, 2ed
 
 ### Converted:
 * Chapter 1
+* Chapter 3
 
 
 ![Book image](https://github.com/timd/ProiOSTableCollectionViews/blob/master/9781484212431.png)
