@@ -45,23 +45,23 @@ func setupViews() {
     // Setup title label
     titleLabel = drawLabel()
     
-    let vTitleConstraint = NSLayoutConstraint(item: titleLabel, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: NSLayoutAttribute.CenterY, multiplier: 1.0, constant: 0)
+    let vTitleConstraint = NSLayoutConstraint(item: titleLabel, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self.contentView, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0)
     
-    let hTitleConstraint = NSLayoutConstraint(item: titleLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0)
+    let hTitleConstraint = NSLayoutConstraint(item: titleLabel, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.contentView, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
     
     self.contentView.addSubview(titleLabel)
     
     // Setup subtitle label
     subtitleLabel = drawLabel()
 
-    let hSubtitleConstraint = NSLayoutConstraint(item: subtitleLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0)
+    let hSubtitleConstraint = NSLayoutConstraint(item: subtitleLabel, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.contentView, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
 
-    let vSubtitleConstraint = NSLayoutConstraint(item: subtitleLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: titleLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 5)
+    let vSubtitleConstraint = NSLayoutConstraint(item: subtitleLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: titleLabel, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 5)
     
     self.contentView.addSubview(subtitleLabel)
     
 
-    self.contentView.backgroundColor = UIColor.cyanColor()
+    self.contentView.backgroundColor = UIColor.cyan
     
     
     // Apply constraints
@@ -70,7 +70,7 @@ func setupViews() {
 }
     
     func drawLabel() -> UILabel {
-        let cellTitleLabel = UILabel(frame: CGRectZero)
+        let cellTitleLabel = UILabel(frame: CGRect.zero)
         cellTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         cellTitleLabel.sizeToFit()
         

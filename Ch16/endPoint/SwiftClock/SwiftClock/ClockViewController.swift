@@ -22,7 +22,7 @@ class ClockViewController: UIViewController {
     
     var dataArray: Array<Array<String>>!
     
-    var tickTimer: NSTimer!
+    var tickTimer: Timer!
     
     override func viewDidLoad() {
 
@@ -32,9 +32,9 @@ class ClockViewController: UIViewController {
         
         configureCollectionView()
         
-        tickTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateClock", userInfo: nil, repeats: true)
+        tickTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(ClockViewController.updateClock), userInfo: nil, repeats: true)
         
-        NSRunLoop.currentRunLoop().addTimer(tickTimer, forMode: NSRunLoopCommonModes)
+        RunLoop.current.add(tickTimer, forMode: RunLoopMode.commonModes)
 
     }
 
@@ -42,7 +42,7 @@ class ClockViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         tickTimer.invalidate()
@@ -65,28 +65,28 @@ extension ClockViewController {
     
     func configureCollectionView() {
         
-        collectionView.registerNib(UINib(nibName: "HourCell", bundle: nil), forCellWithReuseIdentifier: HourCellView)
-        collectionView.registerClass(HandCell.self, forCellWithReuseIdentifier: HourHandCell)
-        collectionView.registerClass(HandCell.self, forCellWithReuseIdentifier: MinsHandCell)
-        collectionView.registerClass(HandCell.self, forCellWithReuseIdentifier: SecsHandCell)
+        collectionView.register(UINib(nibName: "HourCell", bundle: nil), forCellWithReuseIdentifier: HourCellView)
+        collectionView.register(HandCell.self, forCellWithReuseIdentifier: HourHandCell)
+        collectionView.register(HandCell.self, forCellWithReuseIdentifier: MinsHandCell)
+        collectionView.register(HandCell.self, forCellWithReuseIdentifier: SecsHandCell)
 
         clockLayout = ClockLayout()
         collectionView.setCollectionViewLayout(clockLayout, animated: false)
 
-        clockLayout.hourLabelCellSize = CGSizeMake(100.0, 100.0)
-        clockLayout.hourHandSize = CGSizeMake(10.0, 140.0)
-        clockLayout.minuteHandSize = CGSizeMake(10.0, 200.0)
-        clockLayout.secondHandSize = CGSizeMake(6.0, 200.0)
+        clockLayout.hourLabelCellSize = CGSize(width: 100.0, height: 100.0)
+        clockLayout.hourHandSize = CGSize(width: 10.0, height: 140.0)
+        clockLayout.minuteHandSize = CGSize(width: 10.0, height: 200.0)
+        clockLayout.secondHandSize = CGSize(width: 6.0, height: 200.0)
 
     }
 
     func updateClock() {
 
-        let currentTime = NSDate()
+        let currentTime = Date()
         
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm:ss"
-        let timeString = formatter.stringFromDate(currentTime)
+        let timeString = formatter.string(from: currentTime)
         
         timeLabel.text = timeString
         
@@ -98,11 +98,11 @@ extension ClockViewController {
 
 extension ClockViewController : UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return dataArray.count
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         let innerArray = self.dataArray[section]
         
@@ -110,7 +110,7 @@ extension ClockViewController : UICollectionViewDataSource, UICollectionViewDele
         
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         var cell: UICollectionViewCell!
         
@@ -123,33 +123,33 @@ extension ClockViewController : UICollectionViewDataSource, UICollectionViewDele
                 
             case 0: // Handle hour hands
                 
-                cell = collectionView.dequeueReusableCellWithReuseIdentifier(HourHandCell, forIndexPath: indexPath) as! HandCell
-                let hourHandView = UIView(frame: CGRectMake(0, 0, clockLayout.hourHandSize.width, clockLayout.hourHandSize.height))
-                hourHandView.backgroundColor = UIColor.blackColor()
+                cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourHandCell, for: indexPath) as! HandCell
+                let hourHandView = UIView(frame: CGRect(x: 0, y: 0, width: clockLayout.hourHandSize.width, height: clockLayout.hourHandSize.height))
+                hourHandView.backgroundColor = UIColor.black
                 cell.contentView.addSubview(hourHandView)
-                cell.layer.anchorPoint = CGPointMake(0.5, 0.9)
+                cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.9)
                 
             case 1: // handle minute hands
                 
-                cell = collectionView.dequeueReusableCellWithReuseIdentifier(MinsHandCell, forIndexPath: indexPath) as! HandCell
-                let minuteHandView = UIView(frame: CGRectMake(0, 0, clockLayout.minuteHandSize.width, clockLayout.minuteHandSize.height))
-                minuteHandView.backgroundColor = UIColor.blackColor()
+                cell = collectionView.dequeueReusableCell(withReuseIdentifier: MinsHandCell, for: indexPath) as! HandCell
+                let minuteHandView = UIView(frame: CGRect(x: 0, y: 0, width: clockLayout.minuteHandSize.width, height: clockLayout.minuteHandSize.height))
+                minuteHandView.backgroundColor = UIColor.black
                 cell.contentView.addSubview(minuteHandView)
-                cell.layer.anchorPoint = CGPointMake(0.5, 0.9)
+                cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.9)
                 
             default: // handle second hands
                 
-                cell = collectionView.dequeueReusableCellWithReuseIdentifier(SecsHandCell, forIndexPath: indexPath)
-                let secondHandView = UIView(frame: CGRectMake(0, 0, clockLayout.secondHandSize.width, clockLayout.secondHandSize.height))
-                secondHandView.backgroundColor = UIColor.redColor()
+                cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecsHandCell, for: indexPath)
+                let secondHandView = UIView(frame: CGRect(x: 0, y: 0, width: clockLayout.secondHandSize.width, height: clockLayout.secondHandSize.height))
+                secondHandView.backgroundColor = UIColor.red
                 cell.contentView.addSubview(secondHandView)
-                cell.layer.anchorPoint = CGPointMake(0.5, 0.9)
+                cell.layer.anchorPoint = CGPoint(x: 0.5, y: 0.9)
                 
             }
             
         default: // Handle hours labels
             
-            cell = collectionView.dequeueReusableCellWithReuseIdentifier(HourCellView, forIndexPath: indexPath) as UICollectionViewCell
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourCellView, for: indexPath) as UICollectionViewCell
             
             let hourLabelsArray = dataArray[1]
             let hoursText = hourLabelsArray[indexPath.row]

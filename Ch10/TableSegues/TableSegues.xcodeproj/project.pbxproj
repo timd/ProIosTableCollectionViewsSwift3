@@ -11,9 +11,9 @@
 		22715C421BDBB38C007EB048 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22715C411BDBB38C007EB048 /* TableViewController.swift */; };
 		22715C471BDBB38C007EB048 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22715C461BDBB38C007EB048 /* Assets.xcassets */; };
 		22715C4A1BDBB38C007EB048 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22715C481BDBB38C007EB048 /* LaunchScreen.storyboard */; };
-		22715C521BDBB3F8007EB048 /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22715C511BDBB3F8007EB048 /* Name.swift */; settings = {ASSET_TAGS = (); }; };
-		22715C541BDBB421007EB048 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22715C531BDBB421007EB048 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
-		22715C561BDBB433007EB048 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22715C551BDBB433007EB048 /* DetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		22715C521BDBB3F8007EB048 /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22715C511BDBB3F8007EB048 /* Name.swift */; };
+		22715C541BDBB421007EB048 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22715C531BDBB421007EB048 /* Main.storyboard */; };
+		22715C561BDBB433007EB048 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22715C551BDBB433007EB048 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,11 +96,12 @@
 		22715C341BDBB38C007EB048 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Tim Duckett";
 				TargetAttributes = {
 					22715C3B1BDBB38C007EB048 = {
 						CreatedOnToolsVersion = 7.0.1;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -174,8 +175,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -219,8 +222,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -239,6 +244,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -252,6 +258,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.duckett.TableSegues;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -263,6 +270,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.duckett.TableSegues;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -285,6 +293,7 @@
 				22715C501BDBB38C007EB048 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

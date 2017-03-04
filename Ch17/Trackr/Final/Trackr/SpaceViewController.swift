@@ -43,8 +43,8 @@ extension SpaceViewController {
     func setupCollectionView() {
         
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = UICollectionViewScrollDirection.Vertical
-        layout.itemSize = CGSizeMake(75, 75)
+        layout.scrollDirection = UICollectionViewScrollDirection.vertical
+        layout.itemSize = CGSize(width: 75, height: 75)
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
         
@@ -53,19 +53,19 @@ extension SpaceViewController {
         maxCellHeight = min(collectionView.frame.size.width, collectionView.frame.size.height) / 2
         minCellHeight = layout.itemSize.height
         
-        let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: "didGetPinchGesture:")
+        let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(SpaceViewController.didGetPinchGesture(_:)))
         collectionView.addGestureRecognizer(pinchRecognizer)
         
     }
     
-    func didGetPinchGesture(sender: UIPinchGestureRecognizer) {
+    func didGetPinchGesture(_ sender: UIPinchGestureRecognizer) {
         
-        guard sender.numberOfTouches() == 2 else {
+        guard sender.numberOfTouches == 2 else {
             return
         }
         
-        let pointOne = sender.locationOfTouch(0, inView: collectionView)
-        let pointTwo = sender.locationOfTouch(1, inView: collectionView)
+        let pointOne = sender.location(ofTouch: 0, in: collectionView)
+        let pointTwo = sender.location(ofTouch: 1, in: collectionView)
         
         let dX = pointOne.x - pointTwo.x
         let dY = pointTwo.y - pointTwo.y
@@ -83,21 +83,21 @@ extension SpaceViewController {
 
 extension SpaceViewController: UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cvData.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellIdentifier", forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellIdentifier", for: indexPath)
 
         let cellLabel = cell.viewWithTag(1000) as! UILabel
         cellLabel.text = "Cell \(cvData[indexPath.row])"
         
-        cell.layer.borderColor = UIColor.redColor().CGColor
+        cell.layer.borderColor = UIColor.red.cgColor
         cell.layer.borderWidth = 2.0
 
         return cell

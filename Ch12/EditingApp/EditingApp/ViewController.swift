@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         self.navigationItem.title = "Row insertion"
-        self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         for index in 0...10 {
             tableData.append("Row \(index)")
@@ -36,21 +36,21 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count + 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("CellIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
         
         if indexPath.row == tableData.count {
             cell.textLabel?.text = "Add new row"
-            cell.textLabel?.textColor = UIColor.darkGrayColor()
+            cell.textLabel?.textColor = UIColor.darkGray
         } else {
             cell.textLabel?.text = tableData[indexPath.row]
         }
@@ -63,7 +63,7 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     
-func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
     if (indexPath.row == tableData.count) {
         
@@ -78,46 +78,46 @@ func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSInde
     
 }
     
-    override func setEditing(editing: Bool, animated: Bool) {
-        tableView.setEditing(!tableView.editing, animated: true)
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        tableView.setEditing(!tableView.isEditing, animated: true)
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true;
     }
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
         
-        if tableView.editing {
+        if tableView.isEditing {
             if (indexPath.row == tableData.count) {
-                return UITableViewCellEditingStyle.Insert;
+                return UITableViewCellEditingStyle.insert;
             } else {
-                return UITableViewCellEditingStyle.Delete;
+                return UITableViewCellEditingStyle.delete;
             }
         }
         
-        return UITableViewCellEditingStyle.None
+        return UITableViewCellEditingStyle.none
         
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
             
-            tableData.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            tableData.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
             
-        } else if (editingStyle == UITableViewCellEditingStyle.Insert) {
+        } else if (editingStyle == UITableViewCellEditingStyle.insert) {
             
-            let thingToInsert = "\(NSDate())"
+            let thingToInsert = "\(Date())"
             tableData.append(thingToInsert)
-            tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
             
         }
         
     }
     
-    func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         
         if (indexPath.row == tableData.count) {
     return false
@@ -127,16 +127,16 @@ func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSInde
         
     }
     
-func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
 
-        tableData.insert(tableData[sourceIndexPath.row], atIndex: destinationIndexPath.row)
-        tableData.removeAtIndex(sourceIndexPath.row + 1)
+        tableData.insert(tableData[sourceIndexPath.row], at: destinationIndexPath.row)
+        tableData.remove(at: sourceIndexPath.row + 1)
     
             
 }
     
     
-    func tableView(tableView: UITableView, targetIndexPathForMoveFromRowAtIndexPath sourceIndexPath: NSIndexPath, toProposedIndexPath proposedDestinationIndexPath: NSIndexPath) -> NSIndexPath {
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
                 if proposedDestinationIndexPath.row == tableData.count {
                 return sourceIndexPath
                 }

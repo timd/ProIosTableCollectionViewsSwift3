@@ -16,7 +16,6 @@
 		22F248E11BE29BB200A0FC95 /* OddCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22F248E01BE29BB200A0FC95 /* OddCell.xib */; };
 		22F248E41BE29FC600A0FC95 /* EvenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F248E21BE29FC600A0FC95 /* EvenCell.swift */; };
 		22F248E51BE29FC600A0FC95 /* EvenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22F248E31BE29FC600A0FC95 /* EvenCell.xib */; };
-		22F248E71BE4D5A200A0FC95 /* attributions.md in Sources */ = {isa = PBXBuildFile; fileRef = 22F248E61BE4D5A200A0FC95 /* attributions.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,11 +113,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Tim Duckett";
 				TargetAttributes = {
 					22F248C71BE298F100A0FC95 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -160,7 +160,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22F248E71BE4D5A200A0FC95 /* attributions.md in Sources */,
 				22F248CE1BE298F100A0FC95 /* ViewController.swift in Sources */,
 				22F248CC1BE298F100A0FC95 /* AppDelegate.swift in Sources */,
 				22F248DF1BE29AB200A0FC95 /* OddCell.swift in Sources */,
@@ -203,8 +202,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -248,8 +249,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -268,6 +271,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -281,6 +285,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.duckett.Chapter8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -292,6 +297,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.duckett.Chapter8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -314,6 +320,7 @@
 				22F248DC1BE298F100A0FC95 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

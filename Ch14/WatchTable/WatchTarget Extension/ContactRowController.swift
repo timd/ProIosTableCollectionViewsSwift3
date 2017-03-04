@@ -14,7 +14,7 @@ class ContactRowController: NSObject {
     @IBOutlet var nameLabel: WKInterfaceLabel!
     @IBOutlet var avatarImage: WKInterfaceImage!
     
-    @IBAction func didTapDataRow(sender: WKInterfaceButton) {
+    @IBAction func didTapDataRow(_ sender: WKInterfaceButton) {
         
     }
 

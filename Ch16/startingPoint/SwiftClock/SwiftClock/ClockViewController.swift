@@ -12,7 +12,7 @@ class ClockViewController: UIViewController {
     
     @IBOutlet var collectionView: UICollectionView!
 
-    var dataArray = []
+    var dataArray = [Array<String>]()
     
     let HourCellIdentifier = "HourCell"
 
@@ -40,10 +40,10 @@ extension ClockViewController {
     
     func configureCollectionView() {
         
-        collectionView.registerNib(UINib(nibName: "HourLabelCell", bundle: nil), forCellWithReuseIdentifier: HourCellIdentifier)
+        collectionView.register(UINib(nibName: "HourLabelCell", bundle: nil), forCellWithReuseIdentifier: HourCellIdentifier)
         
         let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSizeMake(100.0, 100.0)
+        flowLayout.itemSize = CGSize(width: 100.0, height: 100.0)
         flowLayout.minimumInteritemSpacing = 25.0
         flowLayout.minimumLineSpacing = 25.0
         
@@ -65,23 +65,23 @@ extension ClockViewController {
 
 extension  ClockViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return dataArray.count
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let innerArray = dataArray[section]
-        return innerArray.count
+        return (innerArray as AnyObject).count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(HourCellIdentifier, forIndexPath: indexPath) as UICollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourCellIdentifier, for: indexPath) as UICollectionViewCell
         
         let innerArray = dataArray[indexPath.section]
         
         if let cellLabel: UILabel = cell.viewWithTag(1000) as? UILabel {
-            cellLabel.text = innerArray[indexPath.row] as! String
+            cellLabel.text = innerArray[indexPath.row] 
         }
         
         return cell

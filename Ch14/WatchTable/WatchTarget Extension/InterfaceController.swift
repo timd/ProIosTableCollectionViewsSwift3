@@ -14,8 +14,8 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet var watchTable: WKInterfaceTable!
     var dataArray = [String]()
 
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         // Configure interface objects here.
         setupData()
@@ -63,7 +63,7 @@ class InterfaceController: WKInterfaceController {
         // Start at row 1, because row 0 is the header row
         for index in 0..<dataArray.count {
         
-            let contactRow = watchTable.rowControllerAtIndex(index+1) as! ContactRowController
+            let contactRow = watchTable.rowController(at: index+1) as! ContactRowController
         
             let rowContent = dataArray[index]
         
@@ -79,32 +79,32 @@ class InterfaceController: WKInterfaceController {
         
         let contactCount = dataArray.count
         
-        let footerRow = watchTable.rowControllerAtIndex(contactCount + 1) as! FooterRowController
+        let footerRow = watchTable.rowController(at: contactCount + 1) as! FooterRowController
         
         footerRow.footerLabel.setText("\(contactCount) messages")
         
     }
     
-    override func table(table: WKInterfaceTable, didSelectRowAtIndex rowIndex: Int) {
+    override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
             
         table.setRowTypes(["HeaderCell", "DataCell", "DataCell", "FooterCell"])
             
         for index in 0..<dataArray.count {
-            let contactRow = watchTable.rowControllerAtIndex(index+1) as! ContactRowController
-            contactRow.nameLabel!.setTextColor(UIColor.whiteColor())
+            let contactRow = watchTable.rowController(at: index+1) as! ContactRowController
+            contactRow.nameLabel!.setTextColor(UIColor.white)
         }
         
-        let selectedRow = watchTable.rowControllerAtIndex(rowIndex) as! ContactRowController
+        let selectedRow = watchTable.rowController(at: rowIndex) as! ContactRowController
         
-        selectedRow.nameLabel.setTextColor(UIColor.redColor())
+        selectedRow.nameLabel.setTextColor(UIColor.red)
         
         let contextDictionary = ["selectedName" : self.dataArray[rowIndex - 1]]
         
-        self.pushControllerWithName("DetailInterface", context: contextDictionary)
+        self.pushController(withName: "DetailInterface", context: contextDictionary)
         
     }
     
-    override func contextForSegueWithIdentifier(segueIdentifier: String, inTable table: WKInterfaceTable, rowIndex: Int) -> AnyObject? {
+    override func contextForSegue(withIdentifier segueIdentifier: String, in table: WKInterfaceTable, rowIndex: Int) -> Any? {
             
         if segueIdentifier == "PushDetailScreenSegue" {
             return ["selectedName" : dataArray[rowIndex - 1]]

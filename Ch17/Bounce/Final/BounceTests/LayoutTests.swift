@@ -33,9 +33,9 @@ class LayoutTests: XCTestCase {
         // CV w:500, h:500
         // item w:50, h:50
         
-        let cv = UICollectionView(frame: CGRectMake(0, 0, 500, 500), collectionViewLayout: layout)
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 500, height: 500), collectionViewLayout: layout)
         
-        layout.itemSize = CGSizeMake(50, 50)
+        layout.itemSize = CGSize(width: 50, height: 50)
         layout.numberOfItems = 1
         
         cv.collectionViewLayout.prepareLayout()
@@ -50,9 +50,9 @@ class LayoutTests: XCTestCase {
         // CV w:500, h:500
         // item w:50, h:50
         
-        let cv = UICollectionView(frame: CGRectMake(0, 0, 200, 500), collectionViewLayout: layout)
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 200, height: 500), collectionViewLayout: layout)
         
-        layout.itemSize = CGSizeMake(50, 50)
+        layout.itemSize = CGSize(width: 50, height: 50)
         layout.numberOfItems = 1
         
         cv.collectionViewLayout.prepareLayout()
@@ -67,9 +67,9 @@ class LayoutTests: XCTestCase {
         // CV w:500, h:500
         // item w:50, h:50
         
-        let cv = UICollectionView(frame: CGRectMake(0, 0, 500, 100), collectionViewLayout: layout)
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 500, height: 100), collectionViewLayout: layout)
         
-        layout.itemSize = CGSizeMake(50, 50)
+        layout.itemSize = CGSize(width: 50, height: 50)
         layout.numberOfItems = 1
         
         cv.collectionViewLayout.prepareLayout()
@@ -84,9 +84,9 @@ class LayoutTests: XCTestCase {
         // CV w:500, h:500
         // item w:50, h:50
         
-        let cv = UICollectionView(frame: CGRectMake(0, 0, 200, 500), collectionViewLayout: layout)
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 200, height: 500), collectionViewLayout: layout)
         
-        layout.itemSize = CGSizeMake(50, 50)
+        layout.itemSize = CGSize(width: 50, height: 50)
 
         layout.numberOfItems = 2
         cv.collectionViewLayout.prepareLayout()
@@ -104,26 +104,26 @@ class LayoutTests: XCTestCase {
     
     func test_WhenCalculatingFinalCenterPoint_CalculatesCorrectly() {
         
-        let cv = UICollectionView(frame: CGRectMake(0, 0, 400, 400), collectionViewLayout: layout)
+        let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 400, height: 400), collectionViewLayout: layout)
         
-        layout.itemSize = CGSizeMake(50, 50)
+        layout.itemSize = CGSize(width: 50, height: 50)
         
         layout.numberOfItems = 4
 
-        let indexPath1 = NSIndexPath(forItem: 0, inSection: 0)
-        let indexPath2 = NSIndexPath(forItem: 1, inSection: 0)
-        let indexPath3 = NSIndexPath(forItem: 2, inSection: 0)
-        let indexPath4 = NSIndexPath(forItem: 3, inSection: 0)
+        let indexPath1 = IndexPath(item: 0, section: 0)
+        let indexPath2 = IndexPath(item: 1, section: 0)
+        let indexPath3 = IndexPath(item: 2, section: 0)
+        let indexPath4 = IndexPath(item: 3, section: 0)
         
         let attr1 = layout.layoutAttributesForItemAtIndexPath(indexPath1)
         let attr2 = layout.layoutAttributesForItemAtIndexPath(indexPath2)
         let attr3 = layout.layoutAttributesForItemAtIndexPath(indexPath3)
         let attr4 = layout.layoutAttributesForItemAtIndexPath(indexPath4)
         
-        XCTAssertEqual(attr1?.center, CGPointMake(200, 200))
-        XCTAssertEqual(attr2?.center, CGPointMake(400, 200))
-        XCTAssertEqual(attr3?.center, CGPointMake(200, 400))
-        XCTAssertEqual(attr4?.center, CGPointMake(0, 200))
+        XCTAssertEqual(attr1?.center, CGPoint(x: 200, y: 200))
+        XCTAssertEqual(attr2?.center, CGPoint(x: 400, y: 200))
+        XCTAssertEqual(attr3?.center, CGPoint(x: 200, y: 400))
+        XCTAssertEqual(attr4?.center, CGPoint(x: 0, y: 200))
         
     }
 

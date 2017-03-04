@@ -9,7 +9,7 @@
 import UIKit
 
 protocol InCellButtonProtocol {
-    func didTapButtonInCell(cell: ButtonCell)
+    func didTapButtonInCell(_ cell: ButtonCell)
 }
 
 class ViewController: UIViewController, InCellButtonProtocol {
@@ -40,16 +40,16 @@ extension ViewController {
         }
     }
 
-    func didTapButtonInCell(cell: ButtonCell) {
+    func didTapButtonInCell(_ cell: ButtonCell) {
         
-        let indexPathAtTap = tableView.indexPathForCell(cell)
+        let indexPathAtTap = tableView.indexPath(for: cell)
         
-        let alert = UIAlertController(title: "Something happened!", message: "A button was tapped at row \(indexPathAtTap!.row)", preferredStyle: .Alert)
-        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let alert = UIAlertController(title: "Something happened!", message: "A button was tapped at row \(indexPathAtTap!.row)", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         
         alert.addAction(action)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         
     }
 
@@ -58,17 +58,17 @@ extension ViewController {
 
 extension ViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("CellIdentifier", forIndexPath: indexPath) as! ButtonCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath) as! ButtonCell
         cell.textLabel?.text = "Row \(tableData[indexPath.row])"
 
         if cell.delegate == nil {

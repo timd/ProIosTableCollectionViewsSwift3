@@ -32,7 +32,7 @@ extension ViewController {
     
     func setupTable() {
         
-        tableView.registerClass(CustomClassCell.self, forCellReuseIdentifier: "CustomTVCell")
+        tableView.register(CustomClassCell.self, forCellReuseIdentifier: "CustomTVCell")
         
     }
     
@@ -47,17 +47,17 @@ extension ViewController {
 
 extension ViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("CustomTVCell", forIndexPath: indexPath) as! CustomClassCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomTVCell", for: indexPath) as! CustomClassCell
         
         cell.cellTitle = "Cell \(tableData[indexPath.row])..."
         cell.cellSubtitle = "...\(tableData[indexPath.row]) lleC"
@@ -70,7 +70,7 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70.0
     }
     

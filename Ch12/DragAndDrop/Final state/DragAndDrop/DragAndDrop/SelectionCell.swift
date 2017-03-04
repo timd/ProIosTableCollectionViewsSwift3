@@ -12,13 +12,13 @@ class SelectionCell: UICollectionViewCell {
 
     var delegate: CustomMenuDelegate?
 
-    func performDestroy(sender: AnyObject) {
+    func performDestroy(_ sender: AnyObject) {
         if let delegate = delegate {
             delegate.performDestroy(sender, forCell: self)
         }
     }
 
-    func addItem(sender: AnyObject) {
+    func addItem(_ sender: AnyObject) {
         if let delegate = delegate {
             delegate.addItem(sender, atCell: self)
         }

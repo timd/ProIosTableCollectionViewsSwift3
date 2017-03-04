@@ -40,8 +40,8 @@ extension SizingViewController {
     func setupCollectionView() {
         
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = UICollectionViewScrollDirection.Vertical
-        layout.itemSize = CGSizeMake(375, 375)
+        layout.scrollDirection = UICollectionViewScrollDirection.vertical
+        layout.itemSize = CGSize(width: 375, height: 375)
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
         
@@ -53,22 +53,22 @@ extension SizingViewController {
 
 extension SizingViewController: UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cvData.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellIdentifier", forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellIdentifier", for: indexPath)
 
         let cellLabel = cell.viewWithTag(1000) as! UILabel
         cellLabel.text = "Cell \(cvData[indexPath.row])"
-        cellLabel.textColor = UIColor.whiteColor()
-        cell.contentView.backgroundColor = UIColor.cyanColor()
-        cell.contentView.layer.borderColor = UIColor.blueColor().CGColor
+        cellLabel.textColor = UIColor.white
+        cell.contentView.backgroundColor = UIColor.cyan
+        cell.contentView.layer.borderColor = UIColor.blue.cgColor
         cell.contentView.layer.borderWidth = 2.0
         return cell
     }

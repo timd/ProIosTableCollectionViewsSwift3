@@ -11,14 +11,14 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    private let reuseIdentifier = "ReuseIdentifier"
-    private var dataArray = [String]()
+    fileprivate let reuseIdentifier = "ReuseIdentifier"
+    fileprivate var dataArray = [String]()
     
-    private var selectedCell: UICollectionViewCell?
+    fileprivate var selectedCell: UICollectionViewCell?
     
     var panGesture: UIPanGestureRecognizer!
     var longPressGesture: UILongPressGestureRecognizer!
-    var selectedIndexPath: NSIndexPath!
+    var selectedIndexPath: IndexPath!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,17 +28,17 @@ class ViewController: UIViewController {
             dataArray.append("\(index)")
         }
         
-        panGesture = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePanGesture(_:)))
         collectionView!.addGestureRecognizer(panGesture)
         panGesture.delegate = self
         
-        longPressGesture = UILongPressGestureRecognizer(target: self, action: "handleLongGesture:")
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.handleLongGesture(_:)))
         collectionView!.addGestureRecognizer(longPressGesture)
         longPressGesture.delegate = self
 
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView?.reloadData()
     }
@@ -48,12 +48,12 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func handleLongGesture(gesture: UILongPressGestureRecognizer) {
+    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
         
         switch(gesture.state) {
-        case UIGestureRecognizerState.Began:
-            selectedIndexPath = self.collectionView.indexPathForItemAtPoint(gesture.locationInView(self.collectionView))
-        case UIGestureRecognizerState.Changed:
+        case UIGestureRecognizerState.began:
+            selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView))
+        case UIGestureRecognizerState.changed:
             break
         default:
             selectedIndexPath = nil
@@ -61,14 +61,14 @@ class ViewController: UIViewController {
         
     }
     
-    func handlePanGesture(gesture: UIPanGestureRecognizer) {
+    func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         
         switch(gesture.state) {
-        case UIGestureRecognizerState.Began:
-            collectionView.beginInteractiveMovementForItemAtIndexPath(selectedIndexPath!)
-        case UIGestureRecognizerState.Changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.locationInView(gesture.view!))
-        case UIGestureRecognizerState.Ended:
+        case UIGestureRecognizerState.began:
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath!)
+        case UIGestureRecognizerState.changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        case UIGestureRecognizerState.ended:
             collectionView.endInteractiveMovement()
         default:
             collectionView.cancelInteractiveMovement()
@@ -81,24 +81,24 @@ extension ViewController : UICollectionViewDataSource {
     
     // MARK: UICollectionViewDataSource
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataArray.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
         // Configure the cell
         let label: UILabel = cell.viewWithTag(1000) as! UILabel
         label.text = "Cell \(dataArray[indexPath.row])"
         
-        cell.contentView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        cell.contentView.layer.borderColor = UIColor.lightGray.cgColor
         cell.contentView.layer.borderWidth = 2.0
         
         return cell
@@ -108,28 +108,28 @@ extension ViewController : UICollectionViewDataSource {
 
 extension ViewController: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         
         // Highlight the cell
-        selectedCell = collectionView.cellForItemAtIndexPath(indexPath)
-        selectedCell?.contentView.layer.borderColor = UIColor.redColor().CGColor
+        selectedCell = collectionView.cellForItem(at: indexPath)
+        selectedCell?.contentView.layer.borderColor = UIColor.red.cgColor
         
         return true
     }
     
-    func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         // Find object to move
         let thingToMove = dataArray[sourceIndexPath.row]
         
         // Remove old object
-        dataArray.removeAtIndex(sourceIndexPath.row)
+        dataArray.remove(at: sourceIndexPath.row)
         
         // insert new copy of thing to move
-        dataArray.insert(thingToMove, atIndex: destinationIndexPath.row)
+        dataArray.insert(thingToMove, at: destinationIndexPath.row)
         
         // Set the cell's background to the original light grey
-        selectedCell?.contentView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        selectedCell?.contentView.layer.borderColor = UIColor.lightGray.cgColor
         
         // Reload the data
         collectionView.reloadData()
@@ -139,7 +139,7 @@ extension ViewController: UICollectionViewDelegate {
 
 extension ViewController: UIGestureRecognizerDelegate {
     
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         
         if gestureRecognizer == longPressGesture {
             return panGesture == otherGestureRecognizer
@@ -152,7 +152,7 @@ extension ViewController: UIGestureRecognizerDelegate {
         return true
     }
     
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         
         guard gestureRecognizer == self.panGesture else {
             return true
@@ -161,18 +161,18 @@ extension ViewController: UIGestureRecognizerDelegate {
         return selectedIndexPath != nil
     }
     
-    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell = collectionView.cellForItemAtIndexPath(indexPath)
-        selectedCell?.contentView.layer.borderColor = UIColor.redColor().CGColor
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedCell = collectionView.cellForItem(at: indexPath)
+        selectedCell?.contentView.layer.borderColor = UIColor.red.cgColor
     }
 
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        let selectedCell = collectionView.cellForItemAtIndexPath(indexPath)
-        selectedCell?.contentView.layer.borderColor = UIColor.lightGrayColor().CGColor
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let selectedCell = collectionView.cellForItem(at: indexPath)
+        selectedCell?.contentView.layer.borderColor = UIColor.lightGray.cgColor
     }
 
 }

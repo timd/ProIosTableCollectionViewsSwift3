@@ -27,17 +27,17 @@ class CustomSubclassTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier, forIndexPath: indexPath) as! CustomSubclassTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: kCellIdentifier, for: indexPath) as! CustomSubclassTableViewCell
 
         // Configure the cell...
         cell.textLabel!.text = "Custom subclass \(tableData[indexPath.row])"
@@ -97,7 +97,7 @@ extension CustomSubclassTableViewController {
     
     func setupTable() {
         
-        tableView.registerClass(CustomSubclassTableViewCell.self, forCellReuseIdentifier: kCellIdentifier)
+        tableView.register(CustomSubclassTableViewCell.self, forCellReuseIdentifier: kCellIdentifier)
         
         for index in 0...100 {
             let cellText = "cell \(index)"

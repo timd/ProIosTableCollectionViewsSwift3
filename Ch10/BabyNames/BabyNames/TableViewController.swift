@@ -26,11 +26,11 @@ class TableViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
         }
 
     }
@@ -102,17 +102,17 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
 
     // DataSource methods
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             
-        let cell = tableView.dequeueReusableCellWithIdentifier("NameCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NameCell", for: indexPath)
         
         let name = tableData[indexPath.row]
     
@@ -122,10 +122,10 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    let detailView = storyboard.instantiateViewControllerWithIdentifier("DetailViewController") as! DetailViewController
+    let detailView = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
 
     detailView.displayName = tableData[indexPath.row]
     

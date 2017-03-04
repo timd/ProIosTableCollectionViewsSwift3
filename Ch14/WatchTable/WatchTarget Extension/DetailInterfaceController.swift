@@ -14,8 +14,8 @@ class DetailInterfaceController: WKInterfaceController {
     
     @IBOutlet var nameLabel: WKInterfaceLabel!
     
-    override func awakeWithContext(context: AnyObject?) {
-        super.awakeWithContext(context)
+    override func awake(withContext context: Any?) {
+        super.awake(withContext: context)
         
         if let contextDictionary = context as? Dictionary<String, String> {
         

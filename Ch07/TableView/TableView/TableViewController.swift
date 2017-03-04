@@ -16,12 +16,12 @@ class TableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Add edit button to the nav bar
-        let editButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.Plain, target: self, action: "didTapEditButton")
+        let editButton = UIBarButtonItem(title: "Edit", style: UIBarButtonItemStyle.plain, target: self, action: #selector(TableViewController.didTapEditButton))
 
         self.navigationItem.leftBarButtonItem = editButton
         
         // Setup table
-        tableView.registerNib(UINib(nibName: "TableCustomCell", bundle: nil), forCellReuseIdentifier: "MyCustomCell")
+        tableView.register(UINib(nibName: "TableCustomCell", bundle: nil), forCellReuseIdentifier: "MyCustomCell")
         
         tableData = ["Eins", "Zwei", "Drei", "Vier", "Fünf", "Sechs", "Sieben", "Acht", "Neun", "Zehn", "Elf", "Zwolf", "Dreizehn", "Vierzehn", "Fünfzehn"]
 
@@ -33,17 +33,17 @@ class TableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("MyCustomCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCustomCell", for: indexPath)
 
         let text: String  = tableData[indexPath.row]
         
@@ -66,30 +66,30 @@ class TableViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // calculate height of row here
         return 50
     }
     
     // Override to support conditional editing of the table voverride iew.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
 
     // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 
-        if editingStyle == .Delete {
+        if editingStyle == .delete {
 
-            tableData.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            tableData.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             
-        } else if editingStyle == .Insert {
+        } else if editingStyle == .insert {
 
             tableData.append("New item")
             tableView.reloadData()
@@ -97,9 +97,9 @@ class TableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRow(at: indexPath)
         
         let contentViewSize = cell?.contentView.frame.size.width
         
@@ -109,17 +109,17 @@ class TableViewController: UITableViewController {
     
     
     // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
 
         let rowToMove = tableData[fromIndexPath.row]
-        tableData.removeAtIndex(fromIndexPath.row)
-        tableData.insert(rowToMove, atIndex: toIndexPath.row)
+        tableData.remove(at: fromIndexPath.row)
+        tableData.insert(rowToMove, at: toIndexPath.row)
         tableView.reloadData()
         
     }
 
     // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
     }
@@ -129,7 +129,7 @@ class TableViewController: UITableViewController {
 extension TableViewController {
     
     @IBAction func didTapEditButton() {
-        tableView.setEditing(!tableView.editing, animated: true)
+        tableView.setEditing(!tableView.isEditing, animated: true)
     }
     
 }

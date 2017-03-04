@@ -33,19 +33,19 @@ class XibTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // Return the number of sections.
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
         return tableData.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: kCellIdentifier, for: indexPath) as UITableViewCell
         
         // Configure the cell...
         cell.textLabel!.text = tableData[indexPath.row]
@@ -105,7 +105,7 @@ extension XibTableViewController {
     
     func setupTable() {
         
-        tableView.registerNib(UINib(nibName: "XibCell", bundle: nil), forCellReuseIdentifier: "MyXibCell")
+        tableView.register(UINib(nibName: "XibCell", bundle: nil), forCellReuseIdentifier: "MyXibCell")
         
         for index in 0...100 {
             let cellText = "XIB table cell \(index)"

@@ -42,7 +42,7 @@ extension ViewController {
     func setupCollectionView() {
         
         let layout = BounceLayout()
-        layout.itemSize = CGSizeMake(75,75)
+        layout.itemSize = CGSize(width: 75,height: 75)
         layout.sidePadding = 10
         collectionView.setCollectionViewLayout(layout, animated: false)
         
@@ -50,7 +50,7 @@ extension ViewController {
         
     }
     
-    @IBAction func didTapAdd(sender: AnyObject) {
+    @IBAction func didTapAdd(_ sender: AnyObject) {
 
         // Get index of last item
         let index = cvData.count
@@ -58,13 +58,13 @@ extension ViewController {
         cvData.append("\(index)")
 
         // Create an NSIndexPath object for the new item
-        let newItemIndexPath = NSIndexPath(forItem: index, inSection: 0)
+        let newItemIndexPath = IndexPath(item: index, section: 0)
 
         // Now update the collection view
         
-        UIView.animateWithDuration(1.0, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+        UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: { () -> Void in
             
-            self.collectionView.insertItemsAtIndexPaths([newItemIndexPath])
+            self.collectionView.insertItems(at: [newItemIndexPath])
             
             }) { (finished) -> Void in
                 
@@ -74,14 +74,14 @@ extension ViewController {
 
     }
 
-    @IBAction func didTapRemoveItem(sender: AnyObject) {
+    @IBAction func didTapRemoveItem(_ sender: AnyObject) {
         
         let itemIndex = cvData.count - 1
         
-        removeItemAtIndexPath(NSIndexPath(forItem: itemIndex, inSection: 0))
+        removeItemAtIndexPath(IndexPath(item: itemIndex, section: 0))
     }
 
-    func removeItemAtIndexPath(indexPath: NSIndexPath) {
+    func removeItemAtIndexPath(_ indexPath: IndexPath) {
         
         // Don't attempt to remove the last item!
         if cvData.count == 0 {
@@ -89,10 +89,10 @@ extension ViewController {
         }
         
         // Remove it from the data array
-        cvData.removeAtIndex(indexPath.row)
+        cvData.remove(at: indexPath.row)
         
         // Now update the collection view
-        collectionView.deleteItemsAtIndexPaths([indexPath])
+        collectionView.deleteItems(at: [indexPath])
 
     }
     
@@ -100,24 +100,24 @@ extension ViewController {
 
 extension ViewController: UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cvData.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cvCell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cvCell", for: indexPath)
 
         let cellLabel = cell.viewWithTag(1000) as! UILabel
         cellLabel.text = "Cell \(indexPath.row)"
-        cellLabel.textColor = UIColor.whiteColor()
+        cellLabel.textColor = UIColor.white
         
-        cell.contentView.layer.borderColor = UIColor.cyanColor().CGColor
-        cell.contentView.backgroundColor = UIColor.blackColor()
+        cell.contentView.layer.borderColor = UIColor.cyan.cgColor
+        cell.contentView.backgroundColor = UIColor.black
         cell.contentView.layer.borderWidth = 3.0
         
         return cell
@@ -128,12 +128,12 @@ extension ViewController: UICollectionViewDataSource {
 
 extension ViewController: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         switch indexPath.row {
             
         case 0:
-            didTapAdd(indexPath)
+            didTapAdd(indexPath as AnyObject)
             
         default:
             removeItemAtIndexPath(indexPath)

@@ -12,9 +12,9 @@ private let reuseIdentifier = "ReuseIdentifier"
 
 class CollectionViewController: UICollectionViewController {
 
-    private let reuseIdentifier = "ReuseIdentifier"
-    private var dataArray = [String]()
-    private var selectedCell: UICollectionViewCell?
+    fileprivate let reuseIdentifier = "ReuseIdentifier"
+    fileprivate var dataArray = [String]()
+    fileprivate var selectedCell: UICollectionViewCell?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class CollectionViewController: UICollectionViewController {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView?.reloadData()
     }
@@ -42,24 +42,24 @@ class CollectionViewController: UICollectionViewController {
     // MARK: -
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataArray.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         
         // Configure the cell
         let label: UILabel = cell.viewWithTag(1000) as! UILabel
         label.text = "Cell \(dataArray[indexPath.row])"
         
-        cell.contentView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        cell.contentView.layer.borderColor = UIColor.lightGray.cgColor
         cell.contentView.layer.borderWidth = 2.0
         
         return cell
@@ -68,28 +68,28 @@ class CollectionViewController: UICollectionViewController {
     // MARK: -
     // MARK: UICollectionViewDelegate
 
-    override func collectionView(collectionView: UICollectionView, canMoveItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         
         // Highlight the cell
-        selectedCell = collectionView.cellForItemAtIndexPath(indexPath)
-        selectedCell?.contentView.layer.borderColor = UIColor.redColor().CGColor
+        selectedCell = collectionView.cellForItem(at: indexPath)
+        selectedCell?.contentView.layer.borderColor = UIColor.red.cgColor
 
         return true
     }
     
-    override func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         // Find object to move
         let thingToMove = dataArray[sourceIndexPath.row]
         
         // Remove old object
-        dataArray.removeAtIndex(sourceIndexPath.row)
+        dataArray.remove(at: sourceIndexPath.row)
         
         // insert new copy of thing to move
-        dataArray.insert(thingToMove, atIndex: destinationIndexPath.row)
+        dataArray.insert(thingToMove, at: destinationIndexPath.row)
         
         // Set the cell's background to the original light grey
-        selectedCell?.contentView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        selectedCell?.contentView.layer.borderColor = UIColor.lightGray.cgColor
         
         // Reload the data
         collectionView.reloadData()

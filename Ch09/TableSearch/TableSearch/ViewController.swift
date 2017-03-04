@@ -40,14 +40,14 @@ extension ViewController {
         
     }
     
-    func arrayFromContentsOfFileWithName(fileName: String) -> [String]? {
-        guard let path = NSBundle.mainBundle().pathForResource(fileName, ofType: "txt") else {
+    func arrayFromContentsOfFileWithName(_ fileName: String) -> [String]? {
+        guard let path = Bundle.main.path(forResource: fileName, ofType: "txt") else {
             return nil
         }
         
         do {
-            let content = try String(contentsOfFile:path, encoding: NSUTF8StringEncoding)
-            return content.componentsSeparatedByString(",\n")
+            let content = try String(contentsOfFile:path, encoding: String.Encoding.utf8)
+            return content.components(separatedBy: ",\n")
         } catch _ as NSError {
             return nil
         }
@@ -57,11 +57,11 @@ extension ViewController {
 
 extension ViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if searchActive {
             return filteredTableData.count
@@ -70,9 +70,9 @@ extension ViewController: UITableViewDataSource {
         return tableData.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("CellIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
         
         if searchActive {
             cell.textLabel?.text = filteredTableData[indexPath.row]
@@ -87,22 +87,23 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true
+        searchBar.autocapitalizationType = .none
     }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchActive = false
         tableView.reloadData()
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
         searchActive = false
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchText.characters.count == 0 {
             searchActive = false
@@ -114,12 +115,7 @@ extension ViewController: UISearchBarDelegate {
         
         filteredTableData = tableData.filter({( spaTown: String) -> Bool in
             
-            let spaRange = Range(start: spaTown.startIndex, end: spaTown.endIndex)
-            
-            let stringMatch = spaTown.rangeOfString(searchText,
-                options: NSStringCompareOptions.CaseInsensitiveSearch,
-                range: spaRange,
-                locale: NSLocale.autoupdatingCurrentLocale())
+            let stringMatch = spaTown.lowercased().range(of: searchText.lowercased())
             
             return stringMatch != nil
             

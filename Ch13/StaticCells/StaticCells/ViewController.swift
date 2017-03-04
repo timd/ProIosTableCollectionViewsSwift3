@@ -16,7 +16,7 @@ class ViewController: UIViewController {
 
 extension ViewController {
     
-    @IBAction func didTapButton(sender: UIButton) {
+    @IBAction func didTapButton(_ sender: UIButton) {
         
         switch sender.tag {
             
@@ -36,14 +36,14 @@ extension ViewController {
         
     }
     
-    @IBAction func sliderDidChange(sender: UISlider) {
+    @IBAction func sliderDidChange(_ sender: UISlider) {
         print("Slider value = \(sender.value)")
     }
     
-    @IBAction func switchDidChange(sender: UISwitch) {
-        print("Switch is \(sender.on)")
+    @IBAction func switchDidChange(_ sender: UISwitch) {
+        print("Switch is \(sender.isOn)")
         
-        slider.enabled = sender.on
+        slider.isEnabled = sender.isOn
         
     }
     

@@ -34,41 +34,41 @@ extension ViewController {
         }
     }
     
-    func addButtonToCell(cell: UICollectionViewCell) {
+    func addButtonToCell(_ cell: UICollectionViewCell) {
         
         guard cell.contentView.viewWithTag(1000) != nil else {
             return
         }
         
-        let button = UIButton(type: UIButtonType.RoundedRect)
+        let button = UIButton(type: UIButtonType.roundedRect)
         button.tag = 1000
-        button.setTitle("Tap me!", forState: UIControlState.Normal)
+        button.setTitle("Tap me!", for: UIControlState())
         button.sizeToFit()
 
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: "didTapButtonInCell:", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(ViewController.didTapButtonInCell(_:)), for: UIControlEvents.touchUpInside)
         
-        let vConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.CenterX, relatedBy:
-            NSLayoutRelation.Equal, toItem: cell.contentView, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0)
+        let vConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.centerX, relatedBy:
+            NSLayoutRelation.equal, toItem: cell.contentView, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0)
 
-        let hConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: cell.contentView, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: -10)
+        let hConstraint = NSLayoutConstraint(item: button, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: cell.contentView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: -10)
         
         cell.contentView.addSubview(button)
         cell.contentView.addConstraints([vConstraint, hConstraint])
         
     }
     
-    func didTapButtonInCell(sender: UIButton) {
+    func didTapButtonInCell(_ sender: UIButton) {
         
         let cell = sender.superview!.superview as! UICollectionViewCell
-        let indexPathAtTap = collectionView.indexPathForCell(cell)
+        let indexPathAtTap = collectionView.indexPath(for: cell)
         
-        let alert = UIAlertController(title: "Something happened!", message: "A button was tapped in item \(indexPathAtTap!.row)", preferredStyle: .Alert)
-        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        let alert = UIAlertController(title: "Something happened!", message: "A button was tapped in item \(indexPathAtTap!.row)", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         
         alert.addAction(action)
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
         
     }
     
@@ -76,17 +76,17 @@ extension ViewController {
 
 extension ViewController: UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cvData.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CellIdentifier", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellIdentifier", for: indexPath)
         
         if let label = cell.contentView.viewWithTag(1000) as? UILabel {
             label.text = "Item \(cvData[indexPath.row])"
@@ -94,7 +94,7 @@ extension ViewController: UICollectionViewDataSource {
 
         addButtonToCell(cell)
         
-        cell.layer.borderColor = UIColor.blackColor().CGColor
+        cell.layer.borderColor = UIColor.black.cgColor
         cell.layer.borderWidth = 1.0
         
         return cell

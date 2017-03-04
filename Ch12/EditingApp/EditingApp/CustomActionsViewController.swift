@@ -40,36 +40,36 @@ extension CustomActionsViewController {
 
 extension CustomActionsViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
     }
     
-func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
     
-    let tweet = UITableViewRowAction(style: UITableViewRowActionStyle.Destructive, title: "Tweet") { action, index in
+    let tweet = UITableViewRowAction(style: UITableViewRowActionStyle(), title: "Tweet") { action, index in
         print("selected tweet action")
         tableView.setEditing(false, animated: true)
     }
     
-    tweet.backgroundColor = UIColor.lightGrayColor()
+    tweet.backgroundColor = UIColor.lightGray
 
-    let facebook = UITableViewRowAction(style: .Normal, title: "Facebook") { action, index in
+    let facebook = UITableViewRowAction(style: .normal, title: "Facebook") { action, index in
         print("selected facebook action")
         tableView.setEditing(false, animated: true)
     }
     
-    facebook.backgroundColor = UIColor.blueColor()
+    facebook.backgroundColor = UIColor.blue
     
-    let email = UITableViewRowAction(style: .Normal, title: "Email") { action, index in
+    let email = UITableViewRowAction(style: .normal, title: "Email") { action, index in
         print("selected email action")
         tableView.setEditing(false, animated: true)
     }
     
-    email.backgroundColor = UIColor.purpleColor()
+    email.backgroundColor = UIColor.purple
     
     return [tweet, facebook, email]
     
@@ -79,16 +79,16 @@ func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: N
 
 extension CustomActionsViewController: UITableViewDataSource  {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CellIdentifier", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
         cell.textLabel!.text = "Row \(tableData[indexPath.row])"
         return cell
     }

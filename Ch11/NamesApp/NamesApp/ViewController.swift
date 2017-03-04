@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var collation = UILocalizedIndexedCollation.currentCollation()
+    var collation = UILocalizedIndexedCollation.current()
     var tableData: [String]!
     var sections: Array<Array<String>> = []
     //var sections: [[String]] = []
@@ -34,25 +34,25 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].count
     }
 
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Name for the letter \(collation.sectionTitles[section])"
     }
 
-    func sectionIndexTitlesForTableView(tableView: UITableView) -> [String]? {
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return collation.sectionTitles
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("CellIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
         
         let innerData = sections[indexPath.section]
         
@@ -65,17 +65,17 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: -
     // MARK: Header and footer methods
 
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let headerFrame = CGRectMake(0, 0, tableView.frame.size.width, 100.0)
+        let headerFrame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 100.0)
         let headerView = UIView(frame: headerFrame)
         headerView.backgroundColor = UIColor(red: 0.5, green: 0.2, blue: 0.57, alpha: 1.0)
         
-        let labelFrame = CGRectMake(15.0, 80.0, view.frame.size.width, 15.0)
+        let labelFrame = CGRect(x: 15.0, y: 80.0, width: view.frame.size.width, height: 15.0)
         let headerLabel = UILabel(frame: labelFrame)
         headerLabel.text = "Section Header"
         headerLabel.font = UIFont(name: "Courier-Bold", size: 18.0)
-        headerLabel.textColor = UIColor.whiteColor()
+        headerLabel.textColor = UIColor.white
 
         headerView.addSubview(headerLabel)
         
@@ -83,21 +83,21 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 100.0
     }
 
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        let footerFrame = CGRectMake(0, 0, tableView.frame.size.width, 50.0)
+        let footerFrame = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50.0)
         let footerView = UIView(frame: footerFrame)
         footerView.backgroundColor = UIColor(red: 1.0, green: 0.7, blue: 0.57, alpha: 1.0)
         
-        let labelFrame = CGRectMake(15.0, 10.0, view.frame.size.width, 15.0)
+        let labelFrame = CGRect(x: 15.0, y: 10.0, width: view.frame.size.width, height: 15.0)
         let footerLabel = UILabel(frame: labelFrame)
         footerLabel.text = "Section Footer"
         footerLabel.font = UIFont(name: "Times-New-Roman", size: 12.0)
-        footerLabel.textColor = UIColor.blueColor()
+        footerLabel.textColor = UIColor.blue
         
         footerView.addSubview(footerLabel)
         
@@ -105,7 +105,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 50.0
     }
 
@@ -114,9 +114,9 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 extension ViewController {
     
     func parsePlist() {
-        let bundle = NSBundle.mainBundle()
+        let bundle = Bundle.main
         
-        if let plistPath = bundle.pathForResource("Names", ofType: "plist"),
+        if let plistPath = bundle.path(forResource: "Names", ofType: "plist"),
             let namesDictionary = NSDictionary(contentsOfFile: plistPath),
             let names = namesDictionary["Names"] {
                 tableData = names as! [String]
@@ -125,14 +125,14 @@ extension ViewController {
     
     func configureSectionData() {
         
-        let selector: Selector = "lowercaseString"
+        let selector: Selector = #selector(getter: NSString.lowercased)
         
-        sections = Array(count: collation.sectionTitles.count, repeatedValue: [])
+        sections = Array(repeating: [], count: collation.sectionTitles.count)
         
-        let sortedObjects = collation.sortedArrayFromArray(tableData, collationStringSelector: selector)
+        let sortedObjects = collation.sortedArray(from: tableData, collationStringSelector: selector)
         
         for object in sortedObjects {
-            let sectionNumber = collation.sectionForObject(object, collationStringSelector: selector)
+            let sectionNumber = collation.section(for: object, collationStringSelector: selector)
             sections[sectionNumber].append(object as! String)
         }
         

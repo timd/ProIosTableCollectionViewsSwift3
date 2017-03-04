@@ -16,17 +16,17 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
 
-        let headerRect = CGRectMake(0, 0, tableView.frame.size.width, 50.0)
+        let headerRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 50.0)
         let headerView = UIView(frame: headerRect)
-        headerView.backgroundColor = UIColor.cyanColor()
+        headerView.backgroundColor = UIColor.cyan
         tableView.tableHeaderView = headerView
 
-        let footerRect = CGRectMake(0, 0, tableView.frame.size.width, 75.0)
+        let footerRect = CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 75.0)
         let footerView = UIView(frame: footerRect)
-        footerView.backgroundColor = UIColor.cyanColor()
+        footerView.backgroundColor = UIColor.cyan
         tableView.tableFooterView = footerView
         
-        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
 
     }
 
@@ -39,18 +39,18 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 5
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CellIdentifier", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
         
         // Configure the cell...
         cell.textLabel!.text = "Row \(indexPath.row)"

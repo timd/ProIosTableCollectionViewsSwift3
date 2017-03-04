@@ -35,8 +35,8 @@ override func viewDidLoad() {
 extension ViewController {
     
     func configureTable() {
-        tableView.registerNib(UINib(nibName: "OddCell", bundle: nil), forCellReuseIdentifier: OddCellIdentifier)
-        tableView.registerNib(UINib(nibName: "EvenCell", bundle: nil), forCellReuseIdentifier: EvenCellIdentifier)
+        tableView.register(UINib(nibName: "OddCell", bundle: nil), forCellReuseIdentifier: OddCellIdentifier)
+        tableView.register(UINib(nibName: "EvenCell", bundle: nil), forCellReuseIdentifier: EvenCellIdentifier)
     }
     
     func configureData() {
@@ -78,22 +78,22 @@ extension ViewController {
 
 extension ViewController: UITableViewDataSource {
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableData.count - 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let remainder = indexPath.row % 2
 
         switch remainder {
 
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier(EvenCellIdentifier, forIndexPath: indexPath) as! EvenCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: EvenCellIdentifier, for: indexPath) as! EvenCell
             cell.iconView.image = UIImage(named: "cat")
             cell.backgroundColor = UIColor(patternImage: UIImage(named: "evenBackground")!)
             cell.cellTitle.text = "Cell \(indexPath.row)"
@@ -102,7 +102,7 @@ extension ViewController: UITableViewDataSource {
             return cell
             
         default:
-            let cell = tableView.dequeueReusableCellWithIdentifier(OddCellIdentifier, forIndexPath: indexPath) as! OddCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: OddCellIdentifier, for: indexPath) as! OddCell
             cell.iconView.image = UIImage(named: "dog")
             cell.backgroundColor = UIColor(patternImage: UIImage(named: "oddBackground")!)
             cell.cellTitle.text = "Cell \(indexPath.row)"
@@ -116,7 +116,7 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if (indexPath.row % 2 == 0) {
             return EvenRowHeight
@@ -126,9 +126,9 @@ extension ViewController: UITableViewDelegate {
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        cell?.backgroundView?.backgroundColor = UIColor.redColor()
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundView?.backgroundColor = UIColor.red
     }
     
 }

@@ -10,42 +10,42 @@ import UIKit
 
 class ClockLayout: UICollectionViewLayout {
     
-    private var clockTime: NSDate!
-    private let dateFormatter = NSDateFormatter()
+    fileprivate var clockTime: Date!
+    fileprivate let dateFormatter = DateFormatter()
 
-    private var timeHours: Int!
-    private var timeMinutes: Int!
-    private var timeSeconds: Int!
+    fileprivate var timeHours: Int!
+    fileprivate var timeMinutes: Int!
+    fileprivate var timeSeconds: Int!
     
     var minuteHandSize: CGSize!
     var secondHandSize: CGSize!
     var hourHandSize: CGSize!
     var hourLabelCellSize: CGSize!
 
-    private var clockFaceRadius: CGFloat!
-    private var cvCenter: CGPoint!
+    fileprivate var clockFaceRadius: CGFloat!
+    fileprivate var cvCenter: CGPoint!
     
-    private var attributesArray = [UICollectionViewLayoutAttributes]()
+    fileprivate var attributesArray = [UICollectionViewLayoutAttributes]()
     
     // MARK:
     // MARK: UICollectionViewLayout functions
     
-    override func prepareLayout() {
+    override func prepare() {
         
-        cvCenter = CGPointMake(collectionView!.frame.size.width/2, collectionView!.frame.size.height/2)
+        cvCenter = CGPoint(x: collectionView!.frame.size.width/2, y: collectionView!.frame.size.height/2)
         
-        clockTime = NSDate()
+        clockTime = Date()
         
         dateFormatter.dateFormat = "HH"
-        let hourString = dateFormatter.stringFromDate(clockTime)
+        let hourString = dateFormatter.string(from: clockTime)
         timeHours = Int(hourString)!
 
         dateFormatter.dateFormat = "mm"
-        let minString = dateFormatter.stringFromDate(clockTime)
+        let minString = dateFormatter.string(from: clockTime)
         timeMinutes = Int(minString)!
 
         dateFormatter.dateFormat = "ss"
-        let secString = dateFormatter.stringFromDate(clockTime)
+        let secString = dateFormatter.string(from: clockTime)
         timeSeconds = Int(secString)!
         
         clockFaceRadius = min(cvCenter.x, cvCenter.y)
@@ -54,15 +54,15 @@ class ClockLayout: UICollectionViewLayout {
 
     }
     
-    override func collectionViewContentSize() -> CGSize {
+    override var collectionViewContentSize : CGSize {
         return collectionView!.frame.size
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         return attributesArray
     }
     
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
         // return the item from attributesArray with the matching indexPath
 
@@ -75,21 +75,21 @@ class ClockLayout: UICollectionViewLayout {
     // MARK:
     // MARK: Unused UICollectionViewLayout function
     
-    override func layoutAttributesForDecorationViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+    override func layoutAttributesForDecorationView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
 
         // Will not get called by this layout, as there are no decoration views involved
         return nil
         
     }
     
-    override func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
 
         // Will not get called by this layout, as there are no supplementary views involved
         return nil
         
     }
     
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         
         // Default value is false
         return false
@@ -101,19 +101,19 @@ class ClockLayout: UICollectionViewLayout {
     
 func calculateAllAttributes() {
     
-    for section in 0..<collectionView!.numberOfSections() {
+    for section in 0..<collectionView!.numberOfSections {
     
-        for item in 0..<collectionView!.numberOfItemsInSection(section) {
+        for item in 0..<collectionView!.numberOfItems(inSection: section) {
         
             // Create index path for this item
-            let indexPath = NSIndexPath(forItem: item, inSection: section)
+            let indexPath = IndexPath(item: item, section: section)
             
             // Calculate the attributes
             let attributes = calculateAttributesForItemAt(indexPath)
             
             // Update or insert the newAttributes into the attributesArray
-            if let matchingAttributeIndex = attributesArray.indexOf( { (attributes: UICollectionViewLayoutAttributes ) -> Bool in
-                attributes.indexPath.compare(indexPath) == NSComparisonResult.OrderedSame
+            if let matchingAttributeIndex = attributesArray.index( where: { (attributes: UICollectionViewLayoutAttributes ) -> Bool in
+                (attributes.indexPath as NSIndexPath).compare(indexPath) == ComparisonResult.orderedSame
             }) {
     
                 // Attribute already existed, therefore replace it
@@ -132,9 +132,9 @@ func calculateAllAttributes() {
 
 }
     
-    func calculateAttributesForItemAt(itemPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
+    func calculateAttributesForItemAt(_ itemPath: IndexPath) -> UICollectionViewLayoutAttributes {
         
-        var newAttributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: itemPath)
+        var newAttributes = UICollectionViewLayoutAttributes(forCellWith: itemPath)
         
         if itemPath.section == 0 {
             newAttributes = calculateAttributesForHandCellAt(itemPath)
@@ -148,10 +148,10 @@ func calculateAllAttributes() {
         
     }
     
-    func calculateAttributesForHourLabelWith(hourPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
+    func calculateAttributesForHourLabelWith(_ hourPath: IndexPath) -> UICollectionViewLayoutAttributes {
         
         // Create new instance of UICollectionViewLayoutAttributes
-        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: hourPath)
+        let attributes = UICollectionViewLayoutAttributes(forCellWith: hourPath)
         
         // Calculate overall size of hour label
         attributes.size = hourLabelCellSize
@@ -169,7 +169,7 @@ func calculateAllAttributes() {
 
         let yPosition = cvCenter.y - CGFloat(yDisplacement)
 
-        let center: CGPoint = CGPointMake(xPosition, yPosition)
+        let center: CGPoint = CGPoint(x: xPosition, y: yPosition)
 
         attributes.center = center
         
@@ -177,9 +177,9 @@ func calculateAllAttributes() {
         
     }
     
-    func calculateAttributesForHandCellAt(handPath: NSIndexPath) -> UICollectionViewLayoutAttributes {
+    func calculateAttributesForHandCellAt(_ handPath: IndexPath) -> UICollectionViewLayoutAttributes {
 
-        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: handPath)
+        let attributes = UICollectionViewLayoutAttributes(forCellWith: handPath)
         
         let rotationPerHour: Double = (2 * M_PI) / 12
         
@@ -198,7 +198,7 @@ func calculateAllAttributes() {
             
             let angularDisplacement = (rotationPerHour * Double(timeHours)) + currentIntraHourRotation
             
-            attributes.transform = CGAffineTransformMakeRotation(CGFloat(angularDisplacement))
+            attributes.transform = CGAffineTransform(rotationAngle: CGFloat(angularDisplacement))
             
         case 1: // handle minute hands
 
@@ -211,7 +211,7 @@ func calculateAllAttributes() {
             
             let angularDisplacement = (rotationPerMinute * Double(timeMinutes)) + currentIntraMinuteRotation
             
-            attributes.transform = CGAffineTransformMakeRotation(CGFloat(angularDisplacement))
+            attributes.transform = CGAffineTransform(rotationAngle: CGFloat(angularDisplacement))
             
         case 2: // handle second hands
 
@@ -220,7 +220,7 @@ func calculateAllAttributes() {
             
             let angularDisplacement = rotationPerMinute * Double(timeSeconds)
             
-            attributes.transform = CGAffineTransformMakeRotation(CGFloat(angularDisplacement))
+            attributes.transform = CGAffineTransform(rotationAngle: CGFloat(angularDisplacement))
             
         default:
             break
