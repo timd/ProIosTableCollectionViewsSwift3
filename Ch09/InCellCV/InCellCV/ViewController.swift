@@ -58,7 +58,7 @@ extension ViewController {
         
     }
     
-    func didTapButtonInCell(_ sender: UIButton) {
+    @objc func didTapButtonInCell(_ sender: UIButton) {
         
         let cell = sender.superview!.superview as! UICollectionViewCell
         let indexPathAtTap = collectionView.indexPath(for: cell)

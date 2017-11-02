@@ -35,7 +35,7 @@ class TableViewController: UITableViewController {
         }
     }
     
-    func didPullRefresh(_ sender: UIRefreshControl) {
+    @objc func didPullRefresh(_ sender: UIRefreshControl) {
         
         tableData.append(tableData.count)
         tableView.reloadData()
@@ -44,7 +44,7 @@ class TableViewController: UITableViewController {
         
     }
 
-    func didTapButtonInCell(_ sender: UIButton) {
+    @objc func didTapButtonInCell(_ sender: UIButton) {
         
         let cell = sender.superview!.superview as! UITableViewCell
         let indexPathAtTap = tableView.indexPath(for: cell)

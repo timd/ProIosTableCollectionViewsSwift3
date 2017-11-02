@@ -8,7 +8,7 @@
 
 import XCTest
 
-@testable import Bounce
+@testable import Final
 
 class LayoutTests: XCTestCase {
     

@@ -33,7 +33,7 @@ class SelectionController: UICollectionViewController {
             dataArray.append("\(index)")
         }
         
-        let destroyMenuItem = UIMenuItem(title: "Destroy!", action: Selector("performDestroy:"))
+        let destroyMenuItem = UIMenuItem(title: "Destroy!", action: Selector(("performDestroy:")))
         let addMenuItem = UIMenuItem(title: "Add!", action: #selector(UIPushBehavior.addItem(_:)))
         UIMenuController.shared.menuItems = [addMenuItem, destroyMenuItem]
         

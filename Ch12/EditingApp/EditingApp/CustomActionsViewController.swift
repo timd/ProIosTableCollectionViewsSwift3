@@ -50,7 +50,7 @@ extension CustomActionsViewController: UITableViewDelegate {
     
 func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
     
-    let tweet = UITableViewRowAction(style: UITableViewRowActionStyle(), title: "Tweet") { action, index in
+    let tweet = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Tweet") { action, index in
         print("selected tweet action")
         tableView.setEditing(false, animated: true)
     }

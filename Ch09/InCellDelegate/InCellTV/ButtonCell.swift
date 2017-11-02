@@ -12,7 +12,7 @@ class ButtonCell: UITableViewCell {
     
     var delegate: InCellButtonProtocol?
 
-    func didTapButton(_ sender: AnyObject) {
+    @objc func didTapButton(_ sender: AnyObject) {
         if let delegate = delegate {
             delegate.didTapButtonInCell(self)
         }

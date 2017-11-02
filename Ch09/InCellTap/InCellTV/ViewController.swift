@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         }
     }
 
-    func didTapButtonInCell(_ sender: AnyObject) {
+    @objc func didTapButtonInCell(_ sender: AnyObject) {
         
         let recognizer = sender as! UITapGestureRecognizer
         let cell = recognizer.view as! UITableViewCell
