@@ -103,7 +103,7 @@ class TableViewController: UITableViewController {
         
         let contentViewSize = cell?.contentView.frame.size.width
         
-        print("size = \(contentViewSize)")
+        print("size = \((contentViewSize.debugDescription))")
         
     }
     
